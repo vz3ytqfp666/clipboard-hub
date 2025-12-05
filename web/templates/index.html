@@ -1,0 +1,150 @@
+<!-- web/templates/index.html -->
+{% extends "base.html" %}
+{% block title %}Clipboard Hub · Cloud Sync{% endblock %}
+
+{% block body %}
+<div class="app-shell">
+  <!-- 顶部导航 -->
+  <header class="top-nav">
+    <div class="brand">
+      <div class="brand-logo">
+        <span>C</span>
+      </div>
+      <div class="brand-text">
+        <div class="brand-main">
+          <h1>Clipboard Hub</h1>
+          <div class="tag-pill">
+            <span class="tag-dot"></span>
+            <span>Live · Multi-device Sync</span>
+          </div>
+        </div>
+        <div class="brand-sub">
+          云剪贴板 · 打开同一个链接，你和你所有设备共享同一份文本空间。
+        </div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <div class="nav-metric">
+        <span>总条目：</span><strong id="metric-total">0</strong>
+      </div>
+      <div class="nav-metric">
+        <span>最近同步：</span><strong id="metric-sync">--:--</strong>
+      </div>
+      <button class="toggle-shell" id="theme-toggle" data-theme="dark" aria-label="切换主题">
+        <div class="toggle-track">
+          <span>🌙</span>
+          <span>☀️</span>
+        </div>
+        <div class="toggle-thumb">✦</div>
+      </button>
+    </div>
+  </header>
+
+  <main class="main-grid">
+    <!-- 左侧输入区域 -->
+    <section class="panel">
+      <div class="panel-header">
+        <div class="panel-header-left">
+          <div class="panel-title-row">
+            <strong>新建剪贴内容</strong>
+            <span class="kbd">Ctrl + Enter 保存</span>
+          </div>
+          <div class="panel-sub">
+            可以是代码、指令、备忘录、账号备注……任何你不想重复输入的东西。
+          </div>
+        </div>
+        <div class="panel-header-right">
+          <div class="chip">
+            <span>当前长度：</span>
+            <span class="value" id="char-count">0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="textarea-shell" id="textarea-wrap">
+        <textarea
+          id="input"
+          placeholder="在这里输入文本，按 Ctrl+Enter 或点击右下角按钮保存到云端列表。"
+        ></textarea>
+        <div class="textarea-footer">
+          <div>支持多行文本，自动换行，不限制内容类型。</div>
+          <div class="counter">
+            <span id="line-count">0</span> 行
+          </div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="status-text" id="hint" data-state="idle">
+          <span class="status-dot"></span>
+          <span>Idle · 静候你的下一条灵感</span>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn btn-ghost" id="btn-clear-input">
+            <span class="icon">🧹</span>
+            <span>清空输入框</span>
+          </button>
+          <button class="btn btn-primary" id="btn-add">
+            <span class="icon">＋</span>
+            <span>加入列表</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 右侧列表区域 -->
+    <section class="panel-list">
+      <header class="list-header">
+        <div class="list-header-left">
+          <div class="list-title">你的剪贴列表</div>
+          <div class="list-count">
+            <span id="metric-visible">0</span> / <span id="metric-total-2">0</span> 可见
+          </div>
+        </div>
+        <div class="list-header-right">
+          <div class="search-shell">
+            <span class="search-icon">🔍</span>
+            <input
+              id="search"
+              class="search-input"
+              type="text"
+              placeholder="搜索内容（本地模糊匹配，不走后端）"
+            />
+          </div>
+          <button class="sort-chip" id="sort-toggle" data-order="desc">
+            <span class="arrow">⬆</span>
+            <span>按时间</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="list-body" id="list"></div>
+
+      <div class="empty-state" id="empty-state" style="display: none;">
+        当前没有任何条目。<br />
+        从左侧先写一段文字，然后保存，看看多设备实时同步效果。
+      </div>
+
+      <footer class="list-footer-bar">
+        <div class="sync-text" id="sync-text" data-active="0">
+          <span class="sync-dot"></span>
+          <span id="sync-label">被动刷新模式</span>
+        </div>
+        <div class="list-actions-inline">
+          <button class="btn btn-ghost btn-mini" id="btn-refresh">
+            <span class="icon">⟳</span>
+            <span>立即刷新</span>
+          </button>
+          <button class="btn btn-ghost btn-mini" id="btn-auto-sync">
+            <span class="icon">✨</span>
+            <span>开启 8s 自动同步</span>
+          </button>
+        </div>
+      </footer>
+    </section>
+  </main>
+</div>
+
+<!-- Toast 容器 / Toast container -->
+<div class="toast-root" id="toast-root"></div>
+{% endblock %}

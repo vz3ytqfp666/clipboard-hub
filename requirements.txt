@@ -1,0 +1,13 @@
+# --- Web Framework ---
+Flask==3.1.2
+
+# Flask 的依赖（锁定以防版本冲突）
+Werkzeug==3.1.4
+Jinja2==3.1.6
+itsdangerous==2.2.0
+click==8.3.1
+MarkupSafe==3.0.3
+blinker==1.9.0
+
+# --- If your server code uses requests (currently you don't) ---
+requests==2.32.5

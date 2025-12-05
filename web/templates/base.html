@@ -1,0 +1,24 @@
+<!-- web/templates/base.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1"
+  />
+  <title>{% block title %}Clipboard Hub · Cloud Sync{% endblock %}</title>
+
+  <!-- 全局样式 / Global stylesheet -->
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/main.css') }}"
+  />
+</head>
+<body>
+  {% block body %}{% endblock %}
+
+  <!-- 主入口脚本（ES Module）/ Main entry script -->
+  <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
